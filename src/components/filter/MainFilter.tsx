@@ -21,8 +21,19 @@ import {
   Button,
 } from "@mui/material";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import DetailFilterDialog from "./DetailFilterDialog";
 
 function MainFilter() {
+  /*const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };*/
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const isInitialMount = useRef(true);
@@ -90,6 +101,7 @@ function MainFilter() {
     setPrice(price);
   };
 
+  // it doesn't allow to be empty, we should add same for year
   const handleYearChange = (event: any, newValue: string | null) => {
     const year = newValue!;
 
@@ -126,26 +138,35 @@ function MainFilter() {
     navigate("/filter");
   };
 
+ 
+
   return (
     <div>
+      {
+      //open && <DetailFilterDialog open={open} handleClose={handleClose} />
+      }
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       <Container
-        maxWidth="lg"
-        style={{
-          display: "flex",
+        sx={{
+          maxWidth: {
+            xs: 'lg',
+            sm: 'lg',
+            md: 'lg', 
+            lg: 'md', 
+            xl: 'md',
+          },
+          display: "flex", // fix it , it changes input sizes
           justifyContent: "center",
           alignItems: "center",
           minHeight: "100vh",
-        }}
-        sx={{
           pb: (theme) => theme.spacing(10),
         }}
       >
-        <form style={{ width: "100%" }}>
-          <Grid container columnSpacing={2} rowSpacing={1}>
+        <form> 
+          <Grid container columnSpacing={2} rowSpacing={1} >
             <Grid item xs={12} sm={6} md={3}>
-              <FormControl fullWidth>
+              <FormControl fullWidth >
                 <Autocomplete
                   id="brand"
                   options={data.map((brand) => {
@@ -157,7 +178,7 @@ function MainFilter() {
                     <TextField
                       {...params}
                       label="Brand"
-                      placeholder="Search your country"
+                      placeholder="Search Brand"
                     />
                   )}
                 />
@@ -215,10 +236,9 @@ function MainFilter() {
             <Grid item xs={12}>
               <hr />
             </Grid>
-     
             <Grid item xs={12} sm={6} md={3}>
               <FormControl fullWidth>
-                <Button variant="contained" onClick={handleSubmit} size="large">
+                <Button variant="contained" onClick={handleSubmit}   sx={{ fontSize: '0.9rem', width:'100%', height:'100%',  minHeight: '56px'}} >
                   {fetchItemCountState.data !== null &&
                   fetchItemCountState.data !== undefined
                     ? `Search - ${String(fetchItemCountState.data)} Matches`
@@ -228,7 +248,7 @@ function MainFilter() {
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <FormControl fullWidth sx={{height:'100%'}}>
-                <Button variant="contained" fullWidth sx={{height:'100%'}} size="large" endIcon={<MoreHorizIcon sx={{ ml: 1 }}/>}>
+                <Button variant="contained" onClick={handleSubmit} fullWidth sx={{width:'100%', height:'100%', fontSize: '0.9rem',  minHeight: '56px'}}  endIcon={<MoreHorizIcon sx={{ ml: 1 }}/>}>
                   More Filters
                 </Button>
               </FormControl>

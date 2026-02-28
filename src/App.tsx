@@ -8,7 +8,7 @@ import FilterPage from './pages/FilterPage';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainFilter />,
+    element: <MainPage />,
   },
   {
     path: '/filter',

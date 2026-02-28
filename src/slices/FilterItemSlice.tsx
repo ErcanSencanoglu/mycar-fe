@@ -5,6 +5,8 @@ import { error } from "console";
 import { features } from "process";
 import { FilterFormData } from "../models/FilterModel";
 import { act } from "react";
+import { classToPlain, instanceToPlain } from "class-transformer";
+import 'reflect-metadata';
 
 export interface FilterItemSliceState {
   data: Item[];
@@ -22,9 +24,10 @@ export const fetchItems = createAsyncThunk(
   "filter/fetchItems",
   async (filterFormData: FilterFormData, { rejectWithValue }) => {
     try {
+
       const response = await axios.post<Item[]>(
         "http://localhost:8084/search/filter",
-         filterFormData
+        filterFormData
       );
       const data = response.data;
       return data;
